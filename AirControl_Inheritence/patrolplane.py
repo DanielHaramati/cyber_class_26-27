@@ -1,0 +1,2 @@
+class PatrolPlane:
+    pass
