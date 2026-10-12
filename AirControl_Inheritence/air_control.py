@@ -6,9 +6,9 @@ from typing import List, Tuple
 from crazy_plane import CrazyPlane
 from position import Position
 
-MIN_CELL, MAX_CELL = 0, 9
-CRAZY_STEP = 1
-NUMBER_OF_PLANES = 4
+MIN_CELL, MAX_CELL = 0, 9   # גבולות המשחק (מערכת קואורדינטות 0 עד 9)
+CRAZY_STEP = 1  # מספר תאים שהמטוס יכול לזוז בכל צעד
+NUMBER_OF_PLANES = 4  # מספר המטוסים במשחק
 ROUNDS = 10
 
 
