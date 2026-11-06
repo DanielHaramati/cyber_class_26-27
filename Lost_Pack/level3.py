@@ -5,8 +5,6 @@ packets = [
 
 ]
 
-
-
 def is_hex(val):
     #check if a value is hexadecimal
     try:
@@ -32,7 +30,12 @@ def is_bin(val):
 
         return False
 
+"""
 def check_keys(packet):
+    if not isinstance(packet, dict):
+        raise TypeError("packet must be a dict")
+
+    
     #There are 3 keys for each packet: id, payload, checksum
 
         # for each packet list(packet.keys()) should be ["id" , "payload" , "checksum"]
@@ -40,13 +43,14 @@ def check_keys(packet):
                 return False
 
         return True
+"""
 
 
 
-
-
+"""
 def check_types_of_values(packet):
-    #id field - hex, payload field - binary, checksum field - hex
+    if not isinstance(packet, dict):
+        raise TypeError("packet must be a dict")
 
     if not is_hex(packet["id"]):
             return False
@@ -58,17 +62,29 @@ def check_types_of_values(packet):
             return False
 
     return True
-
+"""
 
 def validate_packet(packet):
-    #merge both conditions
-    if check_keys(packet):
-        return check_types_of_values(packet)
-    return False
+    if not isinstance(packet, dict):
+        raise TypeError("packet must be a dict")
+
+    if not is_hex(packet["id"]) or not is_hex(packet["checksum"]):
+        raise TypeError("need to be hex")
+
+    if not is_bin(packet["payload"]):
+        raise TypeError("binary needs to be binary")
+
+    id_decimal = int(packet["id"], 16)
+    payload_decimal = int(packet["payload"], 2)
+    check_sum = int(packet["checksum"], 16)
+
+    return (id_decimal + payload_decimal) % 256 == check_sum
 
 
-
+"""
 def check_protocol_for_each_packet(packet):
+    if not isinstance(packet, dict):
+        raise TypeError("packet must be a dict")
 
     id_value = int(packet["id"], 16)
 
@@ -80,18 +96,22 @@ def check_protocol_for_each_packet(packet):
         return False
 
     return True
-
+"""
 
 def check_protocol_for_packets(packets_list):
+    if not isinstance(packets_list, list):
+        raise TypeError("packet must be a dict")
 
     for packet in packets_list:
+        try:
+            if not validate_packet(packet):
+                print("packet is not valid! :(")
+            else:
+                print("packet is valid !!!  :)")
+        except Exception as e:
+            print(e)
 
-        if not validate_packet(packet):
+check_protocol_for_packets(packets)
 
-            raise ValueError("Invalid Packet")
-
-    for packet in packets_list:
-
-        print(check_protocol_for_each_packet(packet))
 #משתמשים במודולו 256 בשביל לשמור על הסכום שבודקים מול checksum בפרוטוקול שיהיה קטן מ256
 #
