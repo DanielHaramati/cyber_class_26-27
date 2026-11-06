@@ -52,10 +52,10 @@ def convert_to_hex(packet):
         raise TypeError("tuple's content must be a string")
     
     if packet[0] == "DEC":
-        return hex(int(packet[1]))[2:].upper()
+        return hex(int(packet[1]))[2:].upper().zfill(2)
 
     elif packet[0] == "BIN":
-        return hex(int(packet[1], 2))[2:].upper()
+        return hex(int(packet[1], 2))[2:].upper().zfill(2)
 
     elif packet[0] == "HEX":
         return packet[1].upper()
