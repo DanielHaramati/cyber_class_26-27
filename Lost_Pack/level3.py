@@ -66,20 +66,23 @@ def check_types_of_values(packet):
 
 def validate_packet(packet):
     if not isinstance(packet, dict):
-        raise TypeError("packet must be a dict")
+        return False
 
-    if not is_hex(packet["id"]) or not is_hex(packet["checksum"]):
-        raise TypeError("need to be hex")
+    try:
+        packet_id = int(packet["id"], 16)
+        payload = int(packet["payload"], 2)
+        checksum = int(packet["checksum"], 16)
+    except (KeyError, TypeError, ValueError):
+        return False
 
-    if not is_bin(packet["payload"]):
-        raise TypeError("binary needs to be binary")
+    if not 0 <= packet_id <= 255:
+        return False
+    if not 0 <= payload <= 255:
+        return False
+    if not 0 <= checksum <= 255:
+        return False
 
-    id_decimal = int(packet["id"], 16)
-    payload_decimal = int(packet["payload"], 2)
-    check_sum = int(packet["checksum"], 16)
-
-    return (id_decimal + payload_decimal) % 256 == check_sum
-
+    return (packet_id + payload) % 256 == checksum
 
 """
 def check_protocol_for_each_packet(packet):
