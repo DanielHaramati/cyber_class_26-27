@@ -9,6 +9,7 @@ def is_bin(binary_value):
     try:
         int(binary_value, 2)
         return True
+
     except (ValueError, TypeError):
         return False
 
@@ -18,12 +19,21 @@ def decode_signed_byte(binary_value):
         return None
 
     val = int(binary_value, 2)
-
     # במידה והביט השמאלי ביותר (MSB) הוא 1, המספר שלילי בשיטת המשלים ל-2
     if val >= 128:
         return val - 256
+
     return val
 
-for binary_str in sensor_data:
-    decoded_val = decode_signed_byte(binary_str)
-    print(f"binary : {binary_str} decimal: {decoded_val}")
+def main():
+    for binary_str in sensor_data:
+        decoded_val = decode_signed_byte(binary_str)
+        print(f"binary : {binary_str} decimal: {decoded_val}")
+        
+main()
+
+print("\n\n\n")
+print(decode_signed_byte("00000000"))  # 0
+print(decode_signed_byte("01111111"))  # 127
+print(decode_signed_byte("10000000"))  # -128
+print(decode_signed_byte("11111111"))  # -1
