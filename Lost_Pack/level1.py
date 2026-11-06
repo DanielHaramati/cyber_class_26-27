@@ -15,7 +15,7 @@ def convert_to_decimal(packet):
 
     elif packet[0] == "HEX":
        return int(packet[1], 16)
-    return ValueError("Not a valid base")
+    raise ValueError("Not a valid base")
 
 
 def convert_to_bin(packet):
@@ -30,7 +30,7 @@ def convert_to_bin(packet):
 
     elif packet[0] == "HEX":
         return bin(int(packet[1], 16))[2:]
-    return ValueError("Not a valid base")
+    raise ValueError("Not a valid base")
 
 
 def convert_to_hex(packet):
@@ -46,7 +46,7 @@ def convert_to_hex(packet):
     elif packet[0] == "HEX":
         return packet[1]
 
-    return ValueError("Not a valid base")
+    raise ValueError("Not a valid base")
 
 def convert_to_ascii(packet):
     if packet[0] == "DEC":
@@ -60,7 +60,7 @@ def convert_to_ascii(packet):
     elif packet[0] == "HEX":
         return chr(int(packet[1], 16))
 
-    return ValueError("Not a valid base")
+    raise ValueError("Not a valid base")
 
 convert_to_ascii(("HEX", "4e"))
 def show_details_of_packet(packets_list):
