@@ -58,7 +58,7 @@ def convert_to_hex(packet):
         return hex(int(packet[1], 2))[2:].upper().zfill(2)
 
     elif packet[0] == "HEX":
-        return packet[1].upper()
+        return packet[1].upper().zfill(2)
 
     raise ValueError("Not a valid base")
 
